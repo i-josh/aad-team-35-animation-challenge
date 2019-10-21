@@ -1,10 +1,12 @@
 package com.example.aad_team_35_animation_challenge
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
+import com.example.aad_team_35_animation_challenge.auth.AuthActivity
 import com.example.aad_team_35_animation_challenge.auth.listeners.OnLogoutListener
 
 /** This activity only holds a menu with logout functionality
@@ -22,14 +24,13 @@ class ActivityHavingLogoutMenu : AppCompatActivity(), OnLogoutListener {
     }
 
     override fun logout() {
-        //remove all sign in data from preferences to logout user
+        //changed to boolean pref
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = preferences.edit()
 
-        editor.putString(getString(R.string.registered_address),getString(R.string.empty_string))
-        editor.putString(getString(R.string.registered_name), getString(R.string.empty_string))
-        editor.putString(getString(R.string.registered_password), getString(R.string.empty_string))
+        editor.putBoolean(getString(R.string.user_logged_in),false)
         editor.apply()
+        startActivity(Intent(this, AuthActivity::class.java))
         finish()
     }
 
